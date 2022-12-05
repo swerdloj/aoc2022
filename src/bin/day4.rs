@@ -8,7 +8,7 @@ fn main() {
             .map(|string| string.parse().unwrap())
             .collect();
 
-        // Cases (start/end can aslo be equal):
+        // Cases (start/end can also be equal):
         //    3-7, 4-6 | 4-6, 3-7
            numbers[0] >= numbers[2] && numbers[1] <= numbers[3]
         || numbers[0] <= numbers[2] && numbers[1] >= numbers[3]
