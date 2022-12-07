@@ -44,7 +44,7 @@ impl FileSystem {
         self.subdirs
             .entry(this_dir)
             .or_insert_with(Vec::new)
-            .push(subdir.clone());
+            .push(subdir);
     }
 
     fn register_file(&mut self, size: u64) {
@@ -126,15 +126,13 @@ fn main() {
 
     println!("Part 1: {}", part1);
 
-    
+
     let free_space = 70000000 - fs.total_size();
-    let part2 = fs.sizes.values().fold(70000000, |best, &size| {
-        if free_space + size >= 30000000 {
-            best.min(size)
-        } else {   
-            best
-        }
-    });
+    let part2 = fs.sizes
+        .values()
+        .filter(|&size| free_space + size >= 30000000)
+        .min()
+        .unwrap();
 
     println!("Part 2: {}", part2);
 }
