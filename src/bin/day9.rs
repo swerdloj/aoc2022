@@ -38,7 +38,7 @@ fn main() {
                     match distance {
                           (0, 2) | ( 0, -2) // up or down
                         | (2, 0) | (-2,  0) // right or left
-                         => {
+                        => {
                             position.0 += distance.0 / 2;
                             position.1 += distance.1 / 2;
                         },
