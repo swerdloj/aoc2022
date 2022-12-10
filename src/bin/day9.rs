@@ -34,16 +34,11 @@ fn main() {
                     
                     // Compare each knot to the one before, then move accordingly
                     let distance: (i32, i32) = (previous.0 - position.0, previous.1 - position.1);
-                    
+
                     match distance {
-                          (0, 2) | ( 0, -2) // up or down
-                        | (2, 0) | (-2,  0) // right or left
-                        => {
-                            position.0 += distance.0 / 2;
-                            position.1 += distance.1 / 2;
-                        },
-                        
-                          ( 2,  1) | ( 1,  2) | ( 2,  2) // up-right
+                          ( 0,  2) | ( 0, -2) // up or down
+                        | ( 2,  0) | (-2,  0) // right or left
+                        | ( 2,  1) | ( 1,  2) | ( 2,  2) // up-right
                         | ( 2, -1) | ( 1, -2) | ( 2, -2) // down-right                        
                         | (-2,  1) | (-1,  2) | (-2,  2) // up-left
                         | (-2, -1) | (-1, -2) | (-2, -2) // down-left
