@@ -166,17 +166,15 @@ impl Game {
 
     // Returns top two monkeys' inspections
     fn top_monkeys(&self) -> (u64, u64) {
-        let mut top_monkeys = (0, 0);
-
-        self.inspections.iter().for_each(|&count| {
-            if count > top_monkeys.0 {
-                top_monkeys = (count, top_monkeys.0);
-            } else if count > top_monkeys.1 {
-                top_monkeys.1 = count;
+        self.inspections.iter().fold((0, 0), |mut top, &count| {
+            if count > top.0 {
+                top = (count, top.0);
+            } else if count > top.1 {
+                top.1 = count;
             }
-        });
 
-        top_monkeys
+            top
+        })
     }
 }
 
