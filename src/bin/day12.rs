@@ -106,6 +106,7 @@ fn a_star(mut map: Vec<Vec<AStarNode>>, start: (usize, usize), target: (usize, u
     let mut closed = std::collections::HashSet::new();
 
     while !open.is_empty() {
+        // Get index of node with lowest f_cost (to look at next)
         let next_index = open.iter().enumerate().fold((0, usize::MAX), |(next, min), (index, node)| {
             if node.f_cost() < min {
                 (index, node.f_cost())
