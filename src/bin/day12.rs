@@ -122,12 +122,12 @@ fn a_star(mut map: Vec<Vec<AStarNode>>, start: (usize, usize), target: (usize, u
         }
         
         let mut neighbors = Vec::with_capacity(4);
-        //                             Left     Right   Up       Down
+        // [Left, Right, Up, Down]
         for delta in [(-1, 0), (1, 0), (0, -1), (0, 1)] {
             let new_pos = (current.pos.0 as isize + delta.0, current.pos.1 as isize + delta.1);
             if new_pos.0 >= 0 && new_pos.0 < map[0].len() as isize && new_pos.1 >= 0 && new_pos.1 < map.len() as isize {
                 let new_pos = (new_pos.0 as usize, new_pos.1 as usize);
-                if !closed.contains(&new_pos) && is_move_valid(map[new_pos.1][new_pos.0].height, current.height) {
+                if is_move_valid(map[new_pos.1][new_pos.0].height, current.height) {
                     neighbors.push(new_pos);
                 }
             }
