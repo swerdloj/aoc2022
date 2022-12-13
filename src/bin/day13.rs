@@ -20,7 +20,7 @@ fn parse(string: &mut String) -> Vec<Data> {
             '[' => data.push(Data::List(parse(string))),
 
             ',' => continue,
-            
+
             ']' => return data,
 
             n if n.is_numeric() => {
@@ -137,27 +137,18 @@ fn main() {
     
     // Compare each unsorted packet to the already sorted ones, finding the optimal spot to sort into
     while sorted_packets.len() < num_packets {
-        for i in 0..packets.len() {
-            // Want to find the lowest slot that the packet fits into (like sorting an array)
-            let mut best_slot = usize::MAX;
+        'outer: for i in 0..packets.len() {            
             for (slot, sorted) in sorted_packets.iter().enumerate() {
+                // Place on top
                 if is_properly_ordered(&packets[i], sorted) == Case::Yes {
-                    if slot > best_slot {
-                        break
-                    }
-                    best_slot = slot;
+                    sorted_packets.insert(slot, packets.remove(i));
+                    break 'outer;
                 }
-            }
-
-            // Place at specific location
-            if best_slot < usize::MAX {
-                sorted_packets.insert(best_slot, packets.remove(i));
-                break;
-            }
-            // Place on the bottom
-            else if is_properly_ordered(&sorted_packets[sorted_packets.len()-1], &packets[i]) == Case::Yes {
-                sorted_packets.push(packets.remove(i));
-                break;
+                // Place on bottom
+                else if is_properly_ordered(&sorted_packets[sorted_packets.len()-1], &packets[i]) == Case::Yes {
+                    sorted_packets.push(packets.remove(i));
+                    break 'outer;
+                }
             }
         }
     }
