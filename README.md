@@ -6,3 +6,4 @@
 ## Notable/Interesting Solutions
 - [Day 8](src/bin/day8.rs)
 - [Day 9](src/bin/day9.rs)
+- [Day 13](src/bin/day13.rs)
