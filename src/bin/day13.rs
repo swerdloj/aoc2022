@@ -6,16 +6,14 @@ enum Data {
 
 fn parse(string: &mut String) -> Vec<Data> {
     let mut data = Vec::new();
-
     let mut number_string = String::new();
 
     loop {
         if string.is_empty() {
             return data;
         }
-        let c = string.remove(0);
 
-        match c {
+        match string.remove(0) {
             // Recurse to parse the nested list
             '[' => data.push(Data::List(parse(string))),
 
@@ -42,7 +40,7 @@ fn parse(string: &mut String) -> Vec<Data> {
                 number_string.clear();
             }
 
-            _ => panic!("Invalid character: {c}"),
+            c => panic!("Invalid character: {c}"),
         }
     }
 }
@@ -61,26 +59,22 @@ fn is_properly_ordered(left: &Data, right: &Data) -> Case {
             if l < r { Case::Yes } else if l > r { Case::No } else { Case::Maybe }
 
         // Convert the int to a list and compare
-        (Data::List(_), Data::Int(r)) => 
-            is_properly_ordered(left, &Data::List(vec![Data::Int(*r)])),
+        (Data::List(_), Data::Int(_)) =>
+            is_properly_ordered(left, &Data::List(vec![right.clone()])),
         
-        (Data::Int(l), Data::List(_)) =>
-            is_properly_ordered(&Data::List(vec![Data::Int(*l)]), right),
+        (Data::Int(_), Data::List(_)) =>
+            is_properly_ordered(&Data::List(vec![left.clone()]), right),
         
-        // Compare recursively
+        // Compare lists recursively
         (Data::List(l), Data::List(r)) => {
             for i in 0.. {
-                let left_data = l.get(i);
-                let right_data = r.get(i);
-
-                match (left_data, right_data) {
+                match (l.get(i), r.get(i)) {
                     (Some(l), Some(r)) => {
                         let result = is_properly_ordered(l, r);
                         if result != Case::Maybe {
                             return result;
                         }
                     }
-
                     // Left ran out first
                     (None, Some(_)) => return Case::Yes,
                     // Right ran out first
@@ -139,7 +133,7 @@ fn main() {
     while sorted_packets.len() < num_packets {
         'outer: for i in 0..packets.len() {            
             for (slot, sorted) in sorted_packets.iter().enumerate() {
-                // Place on top
+                // Place above the discovered pair
                 if is_properly_ordered(&packets[i], sorted) == Case::Yes {
                     sorted_packets.insert(slot, packets.remove(i));
                     break 'outer;
