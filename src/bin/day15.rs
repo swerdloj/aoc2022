@@ -1,9 +1,6 @@
 fn main() {
     let input = aoc2022::read_input_for_day(15);
 
-    // Positions occupied by sensors and beacons
-    let mut occupied = std::collections::HashSet::new();
-
     // List of (sensor, closest beacon) locations
     let locations: Vec<((i64, i64), (i64, i64))> = input.lines().map(|line| {
         let (sensor, beacon) = line.split_once(": closest beacon is at ").unwrap();
@@ -15,9 +12,6 @@ fn main() {
         let (beacon_x, beacon_y) = beacon.split_once(", ").unwrap();
         let beacon_x = beacon_x.split_once("x=").unwrap().1.parse().unwrap();
         let beacon_y = beacon_y.split_once("y=").unwrap().1.parse().unwrap();
-
-        occupied.insert((sensor_x, sensor_y));
-        occupied.insert((beacon_x, beacon_y));
 
         ((sensor_x, sensor_y), (beacon_x, beacon_y))
     })
@@ -42,7 +36,8 @@ fn main() {
             if (x - sensor.0).abs() + (2000000 - sensor.1).abs() > range {
                 continue;
             } else {
-                if occupied.get(&(x, 2000000)).is_none() {
+                // Don't count that sensor's beacon if it is in the way
+                if &(x, 2000000) != beacon {
                     part1 += 1;
                 }
                 break;
