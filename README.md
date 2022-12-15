@@ -9,6 +9,7 @@
 - [Day 9](src/bin/day9.rs)
 - [Day 13](src/bin/day13.rs)
 - [Day 14](src/bin/day14.rs)
+- [Day 15](src/bin/day15.rs)
 
 ## Additional Info
 All solutions are my own without help/hints.
