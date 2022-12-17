@@ -3,6 +3,9 @@
 - Solutions are in the `src/bin` directory
 - `cargo run --bin day{N}` to run the solution for day N
 
+## Unfinished
+- Day 16
+- Day 17 Part 2
 
 ## Notable/Interesting Solutions
 - [Day 8](src/bin/day8.rs)
